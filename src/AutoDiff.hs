@@ -1,7 +1,13 @@
 module AutoDiff where
 
 data Dual a = Dual a a
-  deriving (Eq, Read, Show)
+  deriving (Read, Show)
+
+showDual :: (Show a) => Dual a -> String
+showDual (Dual x y) = "Dual value: " ++ show x ++ "\n\nDual derivative: " ++ show y
+
+printDual :: (Show a) => Dual a -> IO ()
+printDual = putStrLn . showDual
 
 -- Represent a constant `x` as `Dual x 0`
 constDual :: Num a => a -> Dual a
@@ -64,6 +70,9 @@ instance (Eq a, Floating a) => Floating (Dual a) where
 -- `Ord a` implies `Ord (Dual a)`
 instance Ord a => Ord (Dual a) where
   (Dual x _) <= (Dual y _) = x <= y
+
+instance Eq a => Eq (Dual a) where
+  (Dual x _) == (Dual y _) = x == y
 
 -- Differentiate a single-variable function `f`
 d :: Num a => (Dual a -> Dual c) -> a -> c

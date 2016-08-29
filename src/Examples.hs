@@ -1,4 +1,5 @@
 import AutoDiff
+import Symbolic
 
 -- Works for single-variable functions
 -- x^2 - 3x, derivative should be 2x - 3
@@ -38,3 +39,16 @@ fib x
 -- For the mathematically inclined, `d f` agrees with the derivative of `f`
 -- wherever `f` is differentiable, but `d f` is potentially defined on a
 -- larger set, as this example illustrates.
+
+xSquaredPlus3x :: (Num a) => a -> a
+xSquaredPlus3x x = x^2 + 3*x
+
+multiVarFunc x y = x*y + x^2 + 3*y
+
+tricky x =
+  if x == 0
+  then 100*x
+  else x
+
+main :: IO ()
+main = pure ()
